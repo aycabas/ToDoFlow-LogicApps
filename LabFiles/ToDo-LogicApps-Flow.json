@@ -1,0 +1,262 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Compose_2": {
+                "inputs": "@variables('Tasks')",
+                "runAfter": {
+                    "For_each": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Compose"
+            },
+            "For_each": {
+                "actions": {
+                    "Append_to_array_variable": {
+                        "inputs": {
+                            "name": "Tasks",
+                            "value": "@outputs('Compose')"
+                        },
+                        "runAfter": {
+                            "Compose": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "AppendToArrayVariable"
+                    },
+                    "Compose": {
+                        "inputs": "@items('For_each')?['title']",
+                        "runAfter": {},
+                        "type": "Compose"
+                    }
+                },
+                "foreach": "@body('Parse_JSON')?['value']",
+                "runAfter": {
+                    "Initialize_variable": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Foreach"
+            },
+            "For_each_2": {
+                "actions": {
+                    "Condition": {
+                        "actions": {
+                            "Post_a_message_as_the_Flow_bot_to_a_user": {
+                                "inputs": {
+                                    "body": {
+                                        "messageBody": "Importance level of this task is **@{items('For_each_2')?['importance']}**.\n The status is **@{items('For_each_2')?['status']}**.\n This task is created in **@{items('For_each_2')?['createdDateTime']}** .",
+                                        "messageTitle": "Some details about your \"@{items('For_each_2')?['title']}\" task:",
+                                        "recipient": {
+                                            "isAlert": true,
+                                            "to": "aycabas@M365x716122.onmicrosoft.com"
+                                        }
+                                    },
+                                    "host": {
+                                        "connection": {
+                                            "name": "@parameters('$connections')['teams']['connectionId']"
+                                        }
+                                    },
+                                    "method": "post",
+                                    "path": "/flowbot/actions/notification/recipienttypes/user"
+                                },
+                                "runAfter": {},
+                                "type": "ApiConnection"
+                            }
+                        },
+                        "expression": {
+                            "and": [
+                                {
+                                    "equals": [
+                                        "@body('Post_a_choice_of_options_as_the_Flow_bot_to_a_user')['selectedOption']",
+                                        "@items('For_each_2')?['title']"
+                                    ]
+                                }
+                            ]
+                        },
+                        "runAfter": {},
+                        "type": "If"
+                    }
+                },
+                "foreach": "@body('Parse_JSON')?['value']",
+                "runAfter": {
+                    "Post_a_choice_of_options_as_the_Flow_bot_to_a_user": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Foreach"
+            },
+            "Get_To-Do_Tasks": {
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['ToDo-Connector_1']['connectionId']"
+                        }
+                    },
+                    "method": "get",
+                    "path": "/beta/me/todo/lists/AAMkAGQ2MDA5OTgyLTRlNjQtNDViOC1hZDc3LTIxZmQyMzBhNGFmZAAuAAAAAAD3kHO0vFTJS5reGKyEIzjVAQDE6jvbV5enRJOzBgolIvpSAAAAAAESAAA=/tasks"
+                },
+                "runAfter": {},
+                "type": "ApiConnection"
+            },
+            "Initialize_variable": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "Tasks",
+                            "type": "array"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Parse_JSON": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Parse_JSON": {
+                "inputs": {
+                    "content": "@body('Get_To-Do_Tasks')",
+                    "schema": {
+                        "properties": {
+                            "@@odata.context": {
+                                "type": "string"
+                            },
+                            "value": {
+                                "items": {
+                                    "properties": {
+                                        "@@odata.etag": {
+                                            "type": "string"
+                                        },
+                                        "body": {
+                                            "properties": {
+                                                "content": {
+                                                    "type": "string"
+                                                },
+                                                "contentType": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "createdDateTime": {
+                                            "type": "string"
+                                        },
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "importance": {
+                                            "type": "string"
+                                        },
+                                        "isReminderOn": {
+                                            "type": "boolean"
+                                        },
+                                        "lastModifiedDateTime": {
+                                            "type": "string"
+                                        },
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "title": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "@@odata.etag",
+                                        "importance",
+                                        "isReminderOn",
+                                        "status",
+                                        "title",
+                                        "createdDateTime",
+                                        "lastModifiedDateTime",
+                                        "id",
+                                        "body"
+                                    ],
+                                    "type": "object"
+                                },
+                                "type": "array"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "runAfter": {
+                    "Get_To-Do_Tasks": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ParseJson"
+            },
+            "Post_a_choice_of_options_as_the_Flow_bot_to_a_user": {
+                "inputs": {
+                    "body": {
+                        "body": {
+                            "messageBody": "Here is your tasks, have a great day! :)",
+                            "messageTitle": "Good morning!",
+                            "options": "@outputs('Compose_2')",
+                            "recipient": {
+                                "isAlert": true,
+                                "to": "aycabas@M365x716122.onmicrosoft.com"
+                            }
+                        },
+                        "notificationUrl": "@{listCallbackUrl()}"
+                    },
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['teams']['connectionId']"
+                        }
+                    },
+                    "path": "/flowbot/actions/messagewithoptions/recipienttypes/user/$subscriptions"
+                },
+                "runAfter": {
+                    "Compose_2": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ApiConnectionWebhook"
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {},
+        "parameters": {
+            "$connections": {
+                "defaultValue": {},
+                "type": "Object"
+            }
+        },
+        "triggers": {
+            "Recurrence": {
+                "recurrence": {
+                    "frequency": "Day",
+                    "interval": 1,
+                    "schedule": {
+                        "hours": [
+                            "9"
+                        ]
+                    },
+                    "startTime": "2020-09-02T09:00:00Z",
+                    "timeZone": "Turkey Standard Time"
+                },
+                "type": "Recurrence"
+            }
+        }
+    },
+    "parameters": {
+        "$connections": {
+            "value": {
+                "ToDo-Connector_1": {
+                    "connectionId": "/subscriptions/6730921c-307d-4303-a081-716747bdb79d/resourceGroups/ToDo-Flow/providers/Microsoft.Web/connections/ToDo-Connector-1",
+                    "connectionName": "ToDo-Connector-1",
+                    "id": "/subscriptions/6730921c-307d-4303-a081-716747bdb79d/resourceGroups/ToDo-Flow/providers/Microsoft.Web/customApis/ToDo-Connector"
+                },
+                "teams": {
+                    "connectionId": "/subscriptions/6730921c-307d-4303-a081-716747bdb79d/resourceGroups/ToDo-Flow/providers/Microsoft.Web/connections/teams",
+                    "connectionName": "teams",
+                    "id": "/subscriptions/6730921c-307d-4303-a081-716747bdb79d/providers/Microsoft.Web/locations/westeurope/managedApis/teams"
+                }
+            }
+        }
+    }
+}
