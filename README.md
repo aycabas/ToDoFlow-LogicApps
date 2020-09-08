@@ -203,7 +203,7 @@ As a next step after **For each**, add **Post a choice of options as the Flow bo
 
 Run the flow and see check [Microsoft Teams](http://teams.microsoft.com/) for the related account if Flow bot is sending a message. Select one of the tasks to see the results in the Logic app flow. 
 
-`Note: If you didn't add Flow in your Microsoft Teams yet, here is the [steps](https://docs.microsoft.com/power-automate/flows-teams?WT.mc_id=devto-blog-aycabas) to enable flow in your Teams.`
+`Note: If you didn't add Flow in your Microsoft Teams yet, here is the steps to enable flow in your Teams: https://cda.ms/1BB`
 
 ![Teams Flow Bot Results](./Images/Teams-Results-01.png)
 ![Logic Apps Flow Results](./Images/LogicApps-Results-04.png)
