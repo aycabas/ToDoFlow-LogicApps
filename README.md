@@ -11,11 +11,16 @@ Today, we will build a flow using [Azure Logic Apps](https://docs.microsoft.com/
 * Build [Azure Logic Apps Custom Connector](https://docs.microsoft.com/azure/logic-apps/custom-connector-overview?WT.mc_id=devto-blog-aycabas) to consume Graph To-Do API and get the tasks
 * Create Logic Apps flow to automate sending tasks from Microsoft Teams Flow bot every morning
 
-![Logic Apps Flow](./Images/Logic-Apps-Flow-01.png)
+![Logic Apps Flow](./Images/FlowDemo-01.png)
 
 #### Microsoft Graph To-Do APIs in Graph Explorer
 
+To be able to review Microsoft Graph To-Do API queries and responses with your own data, go to [Microsoft Graph Explorer](https://developer.microsoft.com/graph/graph-explorer?WT.mc_id=devto-blog-aycabas) and login with your account from the top left corner by clicking **Sign in to Graph Explorer**.
+
+Then, search for "to do" under **Sample queries** and select **Get my to do task list**. This will run the query `https://graph.microsoft.com/beta/me/todo/lists` and will get all the task lists as a response. Copy one of your preferred task list Id from the response.
 
 ![To-Do in Graph Explorer](./Images/GraphExplorer-01.png)
+
+Let's try to get all the tasks under your preferred task list. Change the query with the following: `https://graph.microsoft.com/beta/me/todo/lists/{taskListId}/tasks`. Make sure the request is `GET` and hit `Run query`
 
 ![To-Do in Graph Explorer](./Images/GraphExplorer-02.png)
