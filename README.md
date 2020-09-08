@@ -9,6 +9,7 @@ Just a brief introduction, [Microsoft To Do](https://www.microsoft.com/en-in/mic
 Today, we will build a flow using [Azure Logic Apps](https://docs.microsoft.com/azure/logic-apps/?WT.mc_id=devto-blog-aycabas) to automate Microsoft Teams Flow bot for sending To-Do tasks every morning at 9 AM. Here is the steps we will follow:
 * Learn the queries and responses about Microsoft Graph To-Do APIs in [Graph Explorer](https://developer.microsoft.com/graph/graph-explorer?WT.mc_id=devto-blog-aycabas)
 * Build [Azure Logic Apps Custom Connector](https://docs.microsoft.com/azure/logic-apps/custom-connector-overview?WT.mc_id=devto-blog-aycabas) to consume Graph To-Do API and get the tasks
+* Register your app in [Azure Active Directory](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app?WT.mc_id=devto-blog-aycabas)
 * Create Logic Apps flow to automate sending tasks from Microsoft Teams Flow bot every morning
 
 ![Logic Apps Flow](./Images/FlowDemo-01.png)
@@ -40,7 +41,7 @@ On the connector configuration, fill the fields as follows:
 * **Select the location:** `Region`
 * **Location:** Select the preferred location
 
-Choose **Review + Create** button to continue.
+Choose **Review + create** button to continue.
 
 ![Logic Apps Custom Connector](./Images/CustomConnector-02.png)
 
@@ -69,8 +70,6 @@ On the **Security** page, fill in the fields as follows.
 * **Resource URL:** `https://graph.microsoft.com` (no trailing /)
 * **Scope:** Leave blank
 
-Choose **Create Connector** on the top-right. After the connector has been created, copy the generated **Redirect URL** from Security page and paste it under the [Azure Active Directory registered app](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app?WT.mc_id=devto-blog-aycabas) as a redirect URI.
-
 Choose **Definition** button to continue.
 
 ![Logic Apps Custom Connector](./Images/CustomConnector-05.png)
@@ -85,7 +84,7 @@ On the **Definition** page, select **New Action** and fill in the fields as foll
 Create **Request** by selecting **Import from Sample** and fill in the fields as follows.
 
 * **Verb:** `GET`
-* **URL:** `hhttps://graph.microsoft.com/beta/me/todo/lists/{taskListId}/tasks`
+* **URL: (paste the query you copied from the Graph Explorer)** `https://graph.microsoft.com/beta/me/todo/lists/{taskListId}/tasks`
 * **Headers:** Leave blank
 * **Body:** leave blank
 
@@ -93,4 +92,11 @@ Select **Import**.
 
 ![Logic Apps Custom Connector](./Images/CustomConnector-06.png)
 
-Choose **Create Connector** on the top-right. After the connector has been created, copy the generated **Redirect URL** from Security page and paste it under the [Azure Active Directory registered app](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app?WT.mc_id=devto-blog-aycabas) as a redirect URI.
+Choose **Create Connector** on the top-right. After the connector has been created, copy the generated **Redirect URL** from **Security** page.
+
+![Logic Apps Custom Connector](./Images/CustomConnector-07.png)
+
+### Register your app in Azure Active Directory
+
+Go to **Azure Active Directory** in Azure Portal.
+
