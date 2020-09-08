@@ -8,8 +8,8 @@ Just a brief introduction, [Microsoft To Do](https://www.microsoft.com/en-in/mic
 
 Today, we will build a flow using [Azure Logic Apps](https://docs.microsoft.com/azure/logic-apps/?WT.mc_id=devto-blog-aycabas) to automate Microsoft Teams Flow bot for sending To-Do tasks every morning at 9 AM. Here is the steps we will follow:
 * Learn the queries and responses about Microsoft Graph To-Do APIs in [Graph Explorer](https://developer.microsoft.com/graph/graph-explorer?WT.mc_id=devto-blog-aycabas)
-* Build [Azure Logic Apps Custom Connector](https://docs.microsoft.com/azure/logic-apps/custom-connector-overview?WT.mc_id=devto-blog-aycabas) to consume Graph To-Do API and get the tasks
 * Register your app in [Azure Active Directory](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app?WT.mc_id=devto-blog-aycabas)
+* Build [Azure Logic Apps Custom Connector](https://docs.microsoft.com/azure/logic-apps/custom-connector-overview?WT.mc_id=devto-blog-aycabas) to consume Graph To-Do API and get the tasks
 * Create Logic Apps flow to automate sending tasks from Microsoft Teams Flow bot every morning
 
 ![Logic Apps Flow](./Images/FlowDemo-01.png)
@@ -116,3 +116,12 @@ Choose **Create Connector** on the top-right. After the connector has been creat
 
 ![Logic Apps Custom Connector](./Images/CustomConnector-07.png)
 
+Go back to Azure Active Directory registered app, go to **Authentication tab** and select **Add platform**, choose **Web**.
+
+![Logic Apps Custom Connector](./Images/Redirect-URI-01.png)
+
+Paste the **Redirect URI** you copied from the custom connector under the **Redirect URIs**. Select `Access tokens` and `Id tokens`. Click **Configure** to continue.
+
+![Logic Apps Custom Connector](./Images/Redirect-URI-02.png)
+
+### Create Logic Apps flow to automate receiving To-Do tasks
