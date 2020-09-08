@@ -203,12 +203,40 @@ As a next step after **For each**, add **Post a choice of options as the Flow bo
 
 Run the flow and see check [Microsoft Teams](http://teams.microsoft.com/) for the related account if Flow bot is sending a message. Select one of the tasks to see the results in the Logic app flow. 
 
-`Note: If you didn't add Flow in your Microsoft Teams yet, here is the steps to enable flow in your Teams: https://cda.ms/1BB`
+`Note: If you didn't add Flow in your Microsoft Teams yet, here is the steps to enable Flow in your Teams account: https://cda.ms/1BB`
 
 ![Teams Flow Bot Results](./Images/Teams-Results-01.png)
 ![Logic Apps Flow Results](./Images/LogicApps-Results-04.png)
 
+Finally, after user selected any of the tasks to see more details, we will post another card to share more details about the selected option.
 
+Add **For each** after **Post a choice of options as the Flow bot to a user** and fill the fields as follows:
+* **Output from previous steps:** `value` from **Parse JSON** step
+
+Add **Condition** in **For each** and fill the fields as follows:
+* **Condition:** `And`
+* **Choose a value:** `SelectedOption` from the **Post a choice of options as the Flow bot to a user** step
+* **Operation:** `equal to`
+* **Choose a value:** `title` from **Parse JSON** step
+
+  * **If true:** 
+    Add **Post message as a  Flow bot to a user** in true
+      * **Headline:** `title` from **Parse JSON** step
+      * **Receipent:** The same account you consumed the custom connector
+      * **Message:** `importance`. `status`, `createdDateTime` from **ParseJSON** step
+      * **IsAlert:** `Yes`
+  
+  * **If false:** leave blank
+      
 ![Logic Apps Flow](./Images/LogicApps-10.png)
 
+Here is the complete flow. Run the entire flow for testing.
+
 ![Logic Apps Flow](./Images/LogicApps-11.png)
+
+And, the following is going to be the results after selecting one of the tasks to see the details:
+
+![Teams Flow Bot Results](./Images/Teams-Results-02.png)
+![Logic Apps Flow Results](./Images/LogicApps-Results-05.png)
+
+
