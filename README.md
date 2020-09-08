@@ -28,6 +28,26 @@ Copy this query and save somewhere, we will use this later while creating a cust
 
 ![To-Do in Graph Explorer](./Images/GraphExplorer-02.png)
 
+### Register your app in Azure Active Directory
+
+Go to **Azure Active Directory** in [Azure Portal](https://portal.azure.com). Select **App Registrations** and choose **New registation**.
+
+![Azure Active Directory App Registration](./Images/AAD-App-Registration-01.png)
+
+Enter `To-do-flow-app` in the Name field. In the Supported account types section, select **Accounts in any organizational directory and personal Microsoft accounts**. Leave **Redirect URI** blank and choose **Register** to continue.
+
+![Azure Active Directory App Registration](./Images/AAD-App-Registration-02.png)
+
+Go to **API permissions** from the left hand side menu and select **add a permission**. Choose **Microsoft Graph** and **Delegated Permissions**. Select `Task.ReadWrite` and click **Add permission** button.
+
+![Azure Active Directory App Registration](./Images/AAD-App-Registration-03.png)
+
+Go to **Certificates & secrets** from the left hand side menu and select **New client secret** under the **Client secrets**. Choose expiry time and **Add**.  
+
+![Azure Active Directory App Registration](./Images/AAD-App-Registration-04.png)
+
+Copy the `secret` you created and `Application Id` under the **Overview** page. Save them somewhere, we will use them while creating a custom connector.
+
 ### Build Azure Logic Apps Custom Connector to consume To-Do APIs in a flow
 
 Go to [Azure Portal](https://portal.azure.com) and create [Logic Apps Custom Connector](https://docs.microsoft.com/azure/logic-apps/custom-connector-overview?WT.mc_id=devto-blog-aycabas).
@@ -95,8 +115,4 @@ Select **Import**.
 Choose **Create Connector** on the top-right. After the connector has been created, copy the generated **Redirect URL** from **Security** page.
 
 ![Logic Apps Custom Connector](./Images/CustomConnector-07.png)
-
-### Register your app in Azure Active Directory
-
-Go to **Azure Active Directory** in Azure Portal.
 
