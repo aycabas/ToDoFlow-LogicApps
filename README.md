@@ -239,4 +239,8 @@ And, the following is going to be the results after selecting one of the tasks t
 ![Teams Flow Bot Results](./Images/Teams-Results-02.png)
 ![Logic Apps Flow Results](./Images/LogicApps-Results-05.png)
 
+Our flow is completed! You can find the source code below:
 
+Github repository: https://github.com/aycabas/ToDoFlow-LogicApps
+Custom Connector: https://github.com/aycabas/ToDoFlow-LogicApps/blob/master/LabFiles/ToDo-Connector.json
+Logic Apps flow: https://github.com/aycabas/ToDoFlow-LogicApps/blob/master/LabFiles/ToDo-LogicApps-Flow.json
