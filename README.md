@@ -125,3 +125,90 @@ Paste the **Redirect URI** you copied from the custom connector under the **Redi
 ![Logic Apps Custom Connector](./Images/Redirect-URI-02.png)
 
 ### Create Logic Apps flow to automate receiving To-Do tasks
+
+Go to [Azure Portal](https://portal.azure.com) and create **Logic App**.
+
+![Logic Apps Flow](./Images/LogicApps-01.png)
+
+On the configuration page, fill the fields as follows:
+* **Subscription:** Select an Azure subscription
+* **Resource Group:** Create new resource group
+* **Custom connector name:** give a name for your logic app
+* **Select the location:** `Region`
+* **Location:** Select the preferred location
+
+Choose **Review + create** button to continue.
+
+![Logic Apps Flow](./Images/LogicApps-02.png)
+
+When your Logic app is successfully created, go to your Logic app and choose **Logic app designer**. Select **Recurrence** as a trigger.
+
+![Logic Apps Flow](./Images/LogicApps-03.png)
+
+Configure the recurrence as follows:
+* **Interval:** `1`
+* **Frequecy:** `Day`
+* **Timezone:** Select the timezone you prefer
+* **Start time:** `YYYY-MM-DD`T`HH:MM:SS`Z
+* **At these hours:** `9`
+
+![Logic Apps Flow](./Images/LogicApps-04.png)
+
+Click plus button, go to **Custom** and choose **To-Do Connector** as a next step and select **Get To-Do Tasks** as an action.
+
+![Logic Apps Flow](./Images/LogicApps-05.png)
+
+Sign in with the same account you practiced To-Do APIs in the Graph Explorer.
+
+![Logic Apps Flow](./Images/LogicApps-06.png)
+
+Run the flow and see if you successfully get to-do tasks by using your **Get To-Do Tasks**. Copy the outputs `body`, we will use it in the next step.
+
+![Logic Apps Flow Results](./Images/LogicApps-Results-01.png)
+
+Add **Parse JSON** as a next step. Place **Get To-Do Tasks** `body` under the **Context**. Select **generate schema**, paste the response body you are receiving from the **Get To-Do Tasks** and save.
+
+![Logic Apps Flow](./Images/LogicApps-07.png)
+
+Add **Initialize variable** as a next step. Fill the field as follows:
+* **Name:** `Tasks`
+* **Type:** `Array`
+* **Value:** leave blank
+
+Add **For each** as a next step and fill the fields as follows:
+* **output from previous steps:** `value` from the **Parse JSON** step
+
+Add **Compose** in **For each** and fill the fields as follows: 
+* **inputs:** `title` from the **Parse JSON** step
+
+Add **Append to array variable** in **For each**, and fill the fields as follows:
+* **Name:** `Tasks` 
+* **Value:** `Outputs` from the **Compose** step.
+
+![Logic Apps Flow](./Images/LogicApps-08.png)
+
+Run the flow and see if To-Do Json response is successfully parsed and all task titles are added in the `Tasks` array.
+
+![Logic Apps Flow Results](./Images/LogicApps-Results-02.png)
+![Logic Apps Flow Results](./Images/LogicApps-Results-03.png)
+
+As a next step after **For each**, add **Post a choice of options as the Flow bot to a user** and fill the fields as follows:
+* **Options:** `Tasks` from the **Variables** step
+* **Headline:** `Good morning!`
+* **Receipent:** The same account you consumed the custom connector
+* **Message:** `Here is your tasks, have a great day! :)`
+* **IsAlert:** `Yes`
+
+![Logic Apps Flow](./Images/LogicApps-09.png)
+
+Run the flow and see check [Microsoft Teams](http://teams.microsoft.com/) for the related account if Flow bot is sending a message. Select one of the tasks to see the results in the Logic app flow. 
+
+`Note: If you didn't add Flow in your Microsoft Teams yet, here is the [steps](https://docs.microsoft.com/power-automate/flows-teams?WT.mc_id=devto-blog-aycabas) to enable flow in your Teams.`
+
+![Teams Flow Bot Results](./Images/Teams-Results-01.png)
+![Logic Apps Flow Results](./Images/LogicApps-Results-04.png)
+
+
+![Logic Apps Flow](./Images/LogicApps-10.png)
+
+![Logic Apps Flow](./Images/LogicApps-11.png)
