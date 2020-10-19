@@ -1,4 +1,4 @@
-# Get your To-Do tasks ever morning on Microsoft Teams using Azure Logic Apps
+# Get your To-Do tasks every morning on Microsoft Teams using Azure Logic Apps
 
 I am super excited since [Microsoft Graph To Do APIs](https://docs.microsoft.com/graph/todo-concept-overview?view=graph-rest-beta&WT.mc_id=devto-blog-aycabas) are introduced at Microsoft Build 2020. We finally have APIs available in public preview on the beta endpoint of Graph. 
 
