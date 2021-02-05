@@ -1,22 +1,22 @@
 # Get your To-Do tasks every morning on Microsoft Teams using Azure Logic Apps
 
-I am super excited since [Microsoft Graph To Do APIs](https://docs.microsoft.com/graph/todo-concept-overview?view=graph-rest-beta&WT.mc_id=devto-blog-aycabas) are introduced at Microsoft Build 2020. We finally have APIs available in public preview on the beta endpoint of Graph. 
+I am super excited since [Microsoft Graph To Do APIs](https://docs.microsoft.com/graph/todo-concept-overview?view=graph-rest-beta&WT.mc_id=m365-0000-aycabas) are introduced at Microsoft Build 2020. We finally have APIs available in public preview on the beta endpoint of Graph. 
 
-Just a brief introduction, [Microsoft To Do](https://www.microsoft.com/en-in/microsoft-365/microsoft-to-do-list-app?rtc=1) and [Planner](https://www.microsoft.com/en-us/microsoft-365/business/task-management-software) are the essence of tasks in Microsoft 365. To-Do helps you create a list for anything, from work assignments to school projects to groceries. It is a great tool for your personal use. On the other hand, Planner is the best place to collaborate as a team and keep your team tasks. Tasks come from everywhere, you can keep track of deadlines by adding reminders, due dates, and notes. 
+Just a brief introduction, [Microsoft To Do](https://www.microsoft.com/microsoft-365/microsoft-to-do-list-app?rtc=1&WT.mc_id=m365-0000-aycabas) and [Planner](https://www.microsoft.com/microsoft-365/business/task-management-software?WT.mc_id=m365-0000-aycabas) are the essence of tasks in Microsoft 365. To-Do helps you create a list for anything, from work assignments to school projects to groceries. It is a great tool for your personal use. On the other hand, Planner is the best place to collaborate as a team and keep your team tasks. Tasks come from everywhere, you can keep track of deadlines by adding reminders, due dates, and notes. 
 
 ## Wouldn't it be nice to receive your list of assigned tasks every morning on Microsoft Teams? 
 
-Today, we will build a flow using [Azure Logic Apps](https://docs.microsoft.com/azure/logic-apps/?WT.mc_id=devto-blog-aycabas) to automate Microsoft Teams Flow bot for sending To-Do tasks every morning at 9 AM. Here is the steps we will follow:
-* Learn the queries and responses about Microsoft Graph To-Do APIs in [Graph Explorer](https://developer.microsoft.com/graph/graph-explorer?WT.mc_id=devto-blog-aycabas)
-* Register your app in [Azure Active Directory](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app?WT.mc_id=devto-blog-aycabas)
-* Build [Azure Logic Apps Custom Connector](https://docs.microsoft.com/azure/logic-apps/custom-connector-overview?WT.mc_id=devto-blog-aycabas) to consume Graph To-Do API and get the tasks
+Today, we will build a flow using [Azure Logic Apps](https://docs.microsoft.com/azure/logic-apps/?WT.mc_id=m365-0000-aycabas) to automate Microsoft Teams Flow bot for sending To-Do tasks every morning at 9 AM. Here is the steps we will follow:
+* Learn the queries and responses about Microsoft Graph To-Do APIs in [Graph Explorer](https://developer.microsoft.com/graph/graph-explorer?WT.mc_id=m365-0000-aycabas)
+* Register your app in [Azure Active Directory](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app?WT.mc_id=m365-0000-aycabas)
+* Build [Azure Logic Apps Custom Connector](https://docs.microsoft.com/azure/logic-apps/custom-connector-overview?WT.mc_id=m365-0000-aycabas) to consume Graph To-Do API and get the tasks
 * Create Logic Apps flow to automate sending tasks from Microsoft Teams Flow bot every morning
 
 ![Logic Apps Flow](./Images/FlowDemo-01.png)
 
 ### Microsoft Graph To-Do APIs in Graph Explorer
 
-To be able to review Microsoft Graph To-Do API queries and responses with your own data, go to [Microsoft Graph Explorer](https://developer.microsoft.com/graph/graph-explorer?WT.mc_id=devto-blog-aycabas) and login with your account from the top left corner by clicking **Sign in to Graph Explorer**.
+To be able to review Microsoft Graph To-Do API queries and responses with your own data, go to [Microsoft Graph Explorer](https://developer.microsoft.com/graph/graph-explorer?WT.mc_id=m365-0000-aycabas) and login with your account from the top left corner by clicking **Sign in to Graph Explorer**.
 
 Then, search for "to do" under **Sample queries** and select **Get my to do task list**. This will run the query `https://graph.microsoft.com/beta/me/todo/lists` and will get all the task lists as a response. Copy one of your preferred task list Id from the response.
 
@@ -30,7 +30,7 @@ Copy this query and save somewhere, we will use this later while creating a cust
 
 ### Register your app in Azure Active Directory
 
-Go to **Azure Active Directory** in [Azure Portal](https://portal.azure.com). Select **App Registrations** and choose **New registation**.
+Go to **Azure Active Directory** in [Azure Portal](https://portal.azure.com/?WT.mc_id=m365-0000-aycabas). Select **App Registrations** and choose **New registation**.
 
 ![Azure Active Directory App Registration](./Images/AAD-App-Registration-01.png)
 
@@ -50,7 +50,7 @@ Copy the `secret` you created and `Application Id` under the **Overview** page. 
 
 ### Build Azure Logic Apps Custom Connector to consume To-Do APIs in a flow
 
-Go to [Azure Portal](https://portal.azure.com) and create [Logic Apps Custom Connector](https://docs.microsoft.com/azure/logic-apps/custom-connector-overview?WT.mc_id=devto-blog-aycabas).
+Go to [Azure Portal](https://portal.azure.com/?WT.mc_id=m365-0000-aycabas) and create [Logic Apps Custom Connector](https://docs.microsoft.com/azure/logic-apps/custom-connector-overview?WT.mc_id=m365-0000-aycabas).
 
 ![Logic Apps Custom Connector](./Images/CustomConnector-01.png)
 
@@ -126,7 +126,7 @@ Paste the **Redirect URI** you copied from the custom connector under the **Redi
 
 ### Create Logic Apps flow to automate receiving To-Do tasks
 
-Go to [Azure Portal](https://portal.azure.com) and create **Logic App**.
+Go to [Azure Portal](https://portal.azure.com/?WT.mc_id=m365-0000-aycabas) and create **Logic App**.
 
 ![Logic Apps Flow](./Images/LogicApps-01.png)
 
@@ -201,7 +201,7 @@ As a next step after **For each**, add **Post a choice of options as the Flow bo
 
 ![Logic Apps Flow](./Images/LogicApps-09.png)
 
-Run the flow and see check [Microsoft Teams](http://teams.microsoft.com/) for the related account if Flow bot is sending a message. Select one of the tasks to see the results in the Logic app flow. 
+Run the flow and see check [Microsoft Teams](https://teams.microsoft.com/?WT.mc_id=m365-0000-aycabas) for the related account if Flow bot is sending a message. Select one of the tasks to see the results in the Logic app flow. 
 
 `Note: If you didn't add Flow in your Microsoft Teams yet, here is the steps to enable Flow in your Teams account: https://cda.ms/1BB`
 
